@@ -7,8 +7,8 @@ import { Control, FieldPath } from "react-hook-form";
 import { loginFormSchema } from "@/lib/utils";
 import { z } from "zod";
 
-// 
-const formSchema = loginFormSchema('sign-up')
+//
+const formSchema = loginFormSchema("sign-up");
 
 // ** types
 type props = {
@@ -19,13 +19,7 @@ type props = {
   type?: string;
 };
 
-const CustomInput: React.FC<props> = ({
-  control,
-  label,
-  name,
-  placeholder,
-  type,
-}) => {
+const CustomInput: React.FC<props> = ({ control, label, name, placeholder, type }) => {
   return (
     <FormField
       control={control}
@@ -36,12 +30,7 @@ const CustomInput: React.FC<props> = ({
 
           <div className="flex flex-col w-full">
             <FormControl>
-              <Input
-                className="input-class"
-                placeholder={placeholder}
-                type={type}
-                {...field}
-              />
+              <Input className="input-class" placeholder={placeholder} type={type} {...field} />
             </FormControl>
 
             <FormMessage className="form-message mt-2" />

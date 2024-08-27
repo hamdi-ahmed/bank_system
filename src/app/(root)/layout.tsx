@@ -4,23 +4,24 @@ import Image from "next/image";
 // ** components
 import MobileNavbar from "@/components/MobileNavbar";
 import SideBar from "@/components/SideBar";
+import { getLoggedInUser } from "@/lib/actions/user.action";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = { firstName: "Hamdi", lastName: "Ahmed" };
+  const loggedIn = await getLoggedInUser();
   return (
     <main className="flex h-screen w-full font-inter">
-      <SideBar user={user} />
+      <SideBar user={loggedIn} />
 
       <div className="flex size-full flex-col">
         <div className="root-layout">
           <Image src="/icons/logo.svg" alt="Logo" width={30} height={30} />
 
           <div>
-            <MobileNavbar user={user} />
+            <MobileNavbar user={loggedIn} />
           </div>
         </div>
         {children}
