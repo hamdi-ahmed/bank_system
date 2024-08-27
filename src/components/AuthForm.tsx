@@ -27,9 +27,11 @@ const AuthForm: React.FC<props> = ({ type }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // ** form
+  const formSchema = loginFormSchema(type);
+
   // 1. Define your form.
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -37,7 +39,7 @@ const AuthForm: React.FC<props> = ({ type }) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true);
@@ -79,6 +81,65 @@ const AuthForm: React.FC<props> = ({ type }) => {
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {type === "sign-up" && (
+                <>
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="firstName"
+                      control={form.control}
+                      label="First Name"
+                      placeholder="ex: Jon"
+                    />
+
+                    <CustomInput
+                      name="lastName"
+                      control={form.control}
+                      label="Last Name"
+                      placeholder="ex: Doe"
+                    />
+                  </div>
+
+                  <CustomInput
+                    name="address1"
+                    control={form.control}
+                    label="Address"
+                    placeholder="Enter your specific address"
+                  />
+
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="state"
+                      control={form.control}
+                      label="State"
+                      placeholder="ex: NY"
+                    />
+
+                    <CustomInput
+                      name="postalCode"
+                      control={form.control}
+                      label="Postal Code"
+                      placeholder="ex: 11101"
+                    />
+                  </div>
+
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="birthDate"
+                      control={form.control}
+                      label="Birth Date"
+                      placeholder="yyyy-mm-dd"
+                    />
+
+                    <CustomInput
+                      name="ssn"
+                      control={form.control}
+                      label="SSN"
+                      placeholder="ex: 1234"
+                    />
+                  </div>
+                </>
+              )}
+
               <CustomInput
                 name="email"
                 control={form.control}
@@ -91,6 +152,7 @@ const AuthForm: React.FC<props> = ({ type }) => {
                 control={form.control}
                 label="Password"
                 placeholder="Enter your password"
+                type="password"
               />
 
               <Button
@@ -119,8 +181,11 @@ const AuthForm: React.FC<props> = ({ type }) => {
                 : "Already have an account?"}
             </p>
 
-            <Link className="form-link" href={type === "sign-in" ? "/sign-up" : "/sign-in"}>
-              {type === "sign-in" ? "sign-up" : "sign-in"}
+            <Link
+              className="form-link"
+              href={type === "sign-in" ? "/sign-up" : "/sign-in"}
+            >
+              {type === "sign-in" ? "Sign up" : "Login"}
             </Link>
           </footer>
         </>

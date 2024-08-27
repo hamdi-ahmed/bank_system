@@ -7,11 +7,14 @@ import { Control, FieldPath } from "react-hook-form";
 import { loginFormSchema } from "@/lib/utils";
 import { z } from "zod";
 
+// 
+const formSchema = loginFormSchema('sign-up')
+
 // ** types
 type props = {
-  control: Control<z.infer<typeof loginFormSchema>>;
+  control: Control<z.infer<typeof formSchema>>;
   label: string;
-  name: FieldPath<z.infer<typeof loginFormSchema>>;
+  name: FieldPath<z.infer<typeof formSchema>>;
   placeholder: string;
   type?: string;
 };

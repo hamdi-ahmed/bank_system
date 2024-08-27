@@ -214,7 +214,19 @@ export const authFormSchema = (type: string) =>
   });
 
 // ** validation
-export const loginFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
+export const loginFormSchema = (type: string) =>
+  z.object({
+    firstName: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    lastName: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    address1: type === "sign-in" ? z.string().optional() : z.string().max(50),
+    state:
+      type === "sign-in" ? z.string().optional() : z.string().min(1).max(2),
+    postalCode:
+      type === "sign-in" ? z.string().optional() : z.string().min(3).max(6),
+    birthDate: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    ssn: type === "sign-in" ? z.string().optional() : z.string().min(3),
+
+    // Login
+    email: z.string().email(),
+    password: z.string().min(8),
+  });
