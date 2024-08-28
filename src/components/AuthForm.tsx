@@ -17,6 +17,7 @@ import { loginFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signIn, signUp } from "@/lib/actions/user.action";
+import PlaidLink from "./PlaidLink";
 
 // ** types
 type props = {
@@ -28,7 +29,7 @@ const AuthForm: React.FC<props> = ({ type }) => {
   const router = useRouter();
 
   // ** states
-  const [user, setUser] = useState<SignUpParams>();
+  const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   // ** form
@@ -51,7 +52,21 @@ const AuthForm: React.FC<props> = ({ type }) => {
       // ** sign up form & create plaid token
 
       if (type === "sign-up") {
-        const newUser = await signUp(values);
+        const userData = {
+          firstName: values.firstName!,
+          lastName: values.lastName!,
+          address1: values.address1!,
+          city: values.city!,
+          state: values.state!,
+          postalCode: values.postalCode!,
+          birthDate: values.birthDate!,
+          ssn: values.ssn!,
+          email: values.email,
+          password: values.password,
+        };
+
+        const newUser = await signUp(userData);
+
         setUser(newUser);
       }
 
@@ -86,7 +101,9 @@ const AuthForm: React.FC<props> = ({ type }) => {
       </header>
 
       {user ? (
-        <div className="flex flex-col gap-4"> </div>
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user} variant="primary" />
+        </div>
       ) : (
         <>
           <Form {...form}>
