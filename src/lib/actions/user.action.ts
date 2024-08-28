@@ -49,3 +49,13 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+export async function logout() {
+  try {
+    const { account } = await createSessionClient();
+    cookies().delete("app-write-session");
+    await account.deleteSession("current");
+  } catch (error) {
+    return null;
+  }
+}

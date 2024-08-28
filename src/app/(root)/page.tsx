@@ -8,14 +8,14 @@ import { getLoggedInUser } from "@/lib/actions/user.action";
 
 const page = async () => {
   const loggedIn = await getLoggedInUser();
-
+  console.log({ loggedIn });
   return (
     <section className="home">
       <div className="home-content">
         <header className="home-header">
           <HeaderBox
             type="greeting"
-            user={loggedIn.name}
+            user={loggedIn?.name}
             title="Welcome"
             subtext="Access and manage your account and your transactions efficiently."
           />
